@@ -9,9 +9,9 @@ module top (
     output [3:0] AN
 );
 
-    reg clk25MHZ;
-	reg [1:0] clk100HZ;
-	clk_div divider(.clk(clk), .clk25MHZ(clk25MHZ), .clk100HZ(clk100HZ));
+    wire clk25MHZ;
+	wire [1:0] clk100HZ;
+	clk_div divider(.clk(clk), .clk25MHZ(clk25MHZ), .clk100HZ_2b(clk100HZ));
 
 	wire [8:0] row;
 	wire [9:0] col;
@@ -20,8 +20,8 @@ module top (
 	VGA vga0(.clk(clk25MHZ), .rst(rst), .R(R), .G(G), .B(B), .HS(HS), .VS(VS), .row(row), .col(col), .rdn(rdn), .Din(pixel));
 
 
-	reg [7:0] keyboard_data;
-	reg keyboard_ready;
+	wire [7:0] keyboard_data;
+	wire keyboard_ready;
 	PS2_Keyboard_Driver pkd(.clk(clk), .rst(rst), .rdn(1'b0), .data(keyboard_data), .ready(keyboard_ready));
 
 	DispNum displaynumber(.clk100HZ(clk100HZ), .rst(rst), .HEXS(16'h1234), .EN(4'b1111), .P(4'b0000), .SEG(SEG), .AN(AN));
